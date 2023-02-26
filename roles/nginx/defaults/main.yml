@@ -1,0 +1,2 @@
+# file: nginx/defaults/main.yml
+nginx_client_max_body_size: 13M

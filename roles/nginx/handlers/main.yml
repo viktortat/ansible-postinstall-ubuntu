@@ -1,0 +1,12 @@
+# file: nginx/handlers/main.yml
+
+- name: restart nginx
+  service:
+    name: nginx
+    enabled: yes
+    state: restarted
+  become: yes
+
+- name: reload nginx
+  command: /etc/init.d/nginx reload
+  become: yes

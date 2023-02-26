@@ -1,0 +1,35 @@
+---
+# - name: Install Docker on Ubuntu 16.04
+#   include: docker_ubuntu_16_04.yml
+#   when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == '16.04'
+
+# - set_fact: info_os="{{ ansible_distribution }} {{ansible_distribution_version}} "
+# - debug: 
+#     var: info_os
+    
+# - name: Install Docker on Ubuntu 18.04
+#   include: docker_ubuntu_18_04.yml
+#   when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == '18.04'
+
+- name: Install Docker on Ubuntu 20.04
+  include: docker_ubuntu_20_04.yml
+  when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == '20.04'
+
+- name: Install Docker-compose {{ ansible_distribution_version }}
+  include: docker_compose.yml
+  when: docker_install_compose
+  
+# sudo groupadd docker
+- name: Create "docker" group
+  group:
+    name: "{{ docker_group }}"
+    state: present
+  when: docker_addgrooup_deployuser  
+
+# sudo usermod -aG docker root
+- name: Add {{ deploy_user }} user to {{ docker_group }} group
+  user:
+    name: "{{ deploy_user }}"
+    groups: "{{ docker_group }}"
+    append: yes
+  when: docker_addgrooup_deployuser  

@@ -1,0 +1,55 @@
+- name: Ensure group "deployrs" exists
+  group:
+    name: deployrs
+    state: present
+
+- name: Add deploy user
+  user: name={{ deploy_user }} shell=/bin/bash groups=deployrs append=true
+
+# - name: Adding postgres user ({{ postgresql_user }}) to deploy user group ({{ deploy_user }}) to allow usage of psql from /home path
+#   user: name={{ postgresql_user }}
+#     groups={{ deploy_user }}
+#     append=yes
+
+# - name: Add deploy user public key to authorized_keys
+#   authorized_key: user={{ deploy_user }} key=https://github.com/{{ gh_pubkey_user }}.keys
+
+- name: Add deploy user to sudoers
+  lineinfile: "dest=/etc/sudoers
+    regexp='^{{ deploy_user }} ALL'
+    line='{{ deploy_user }} ALL=(ALL) NOPASSWD: ALL'
+    state=present"
+
+# - name: Creates deploy directory for app
+#   file: path={{ deploy_directory }} state=directory owner={{deploy_user}} group={{webserver_user}} mode=0775
+
+
+
+
+# ============
+# - hosts: all
+#   vars:
+#     sudoers:
+#       - user1
+#       - user2
+#       - user3
+#   tasks:
+#     - name: Make sure we have a 'wheel' group
+#       group:
+#         name: wheel
+#         state: present
+
+#     - name: Allow 'wheel' group to have passwordless sudo
+#       lineinfile:
+#         dest: /etc/sudoers
+#         state: present
+#         regexp: '^%wheel'
+#         line: '%wheel ALL=(ALL) NOPASSWD: ALL'
+#         validate: visudo -cf %s
+
+#     - name: Add sudoers users to wheel group
+#       user:
+#         name: "{{ item }}"
+#         groups: wheel
+#         append: yes
+#       with_items: "{{ sudoers }}"

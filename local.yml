@@ -1,0 +1,22 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: yes
+  
+  pre_tasks:
+   - include: tasksubuntu/update.yml
+  tasks:
+   - include: tasksubuntu/packages.yml
+   
+  roles:
+    - utils
+    - dotnet
+    - deploy-users
+    - nginx
+    - docker
+
+  vars:
+    # DEPLOY-USERS
+    deploy_user: "developer" # cat /etc/sudoerscat
+    # dotnet
+    dotnet_package: "dotnet-sdk-6.0"
