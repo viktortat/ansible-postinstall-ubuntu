@@ -16,7 +16,7 @@ EOT
 sudo -i
 
 ## Usage Run the following command to pull and run the playbook: 
-ansible-pull -U https://github.com/viktortat/ansible-postinstall-ubuntu.git
+sudo ansible-pull -U https://github.com/viktortat/ansible-postinstall-ubuntu.git
 
 # install in wsl2
 sudo ansible-playbook local.yml
