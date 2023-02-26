@@ -9,10 +9,10 @@
    - include: tasksubuntu/packages.yml
    
   roles:
-    - utils
-    - dotnet
-    - deploy-users
-    - nginx
+    # - utils
+    # - dotnet
+    # - deploy-users
+    # - nginx
     - docker
 
   vars:
