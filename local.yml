@@ -7,6 +7,7 @@
    - include: tasksubuntu/update.yml
   tasks:
    - include: tasksubuntu/packages.yml
+   - include: tasksubuntu/packages_ui.yml
    
   roles:
     # - utils
